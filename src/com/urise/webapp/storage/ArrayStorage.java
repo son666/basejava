@@ -21,8 +21,7 @@ public class ArrayStorage {
         if (resume instanceof Resume) {
             int index = Arrays.asList(storage).indexOf(resume);
             storage[index] = r;
-        }
-        else {
+        } else {
             System.out.println("Resume отсутсвует в хранилище");
         }
     }
@@ -31,8 +30,7 @@ public class ArrayStorage {
         Resume resume = findResume(r.getUuid());
         if (resume instanceof Resume) {
             System.out.println("Resume уже присутствует в хранилище");
-        }
-        else {
+        } else {
             storage[size] = r;
             size++;
         }
@@ -53,8 +51,7 @@ public class ArrayStorage {
             storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
-        }
-        else {
+        } else {
             System.out.println("Resume отсутсвует в хранилище");
         }
     }

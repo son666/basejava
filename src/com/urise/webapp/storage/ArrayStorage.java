@@ -8,51 +8,54 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+    private Resume[] storage = new Resume[10_000];
     private int size;
 
     public void clear() {
-        Arrays.fill(storage, null);
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    public void update(Resume r) {
-        Resume resume = findResume(r.getUuid());
-        if (resume instanceof Resume) {
-            int index = Arrays.asList(storage).indexOf(resume);
-            storage[index] = r;
+    public void update(Resume resume) {
+        int indexResumeFind = findResume(resume.getUuid());
+        if (indexResumeFind != -1) {
+            storage[indexResumeFind] = resume;
         } else {
-            System.out.println("Resume отсутсвует в хранилище");
+            System.out.println("Resume c № " + resume.getUuid() + " отсутсвует в хранилище");
         }
     }
 
-    public void save(Resume r) {
-        Resume resume = findResume(r.getUuid());
-        if (resume instanceof Resume) {
-            System.out.println("Resume уже присутствует в хранилище");
+    public void save(Resume resume) {
+        int indexResumeFind = findResume(resume.getUuid());
+        if (indexResumeFind != -1) {
+            System.out.println("Resume c № " + resume.getUuid() + " уже присутствует в хранилище");
         } else {
-            storage[size] = r;
-            size++;
+            if (size != storage.length) {
+                storage[size] = resume;
+                size++;
+            } else {
+                System.out.println("В хранилище нет места!");
+            }
         }
     }
 
     public Resume get(String uuid) {
-        Resume resume = findResume(uuid);
-        if (!(resume instanceof Resume)) {
-            System.out.println("Resume с №" + uuid + " отсутсвует в хранилище");
+        int indexResumeFind = findResume(uuid);
+        if (indexResumeFind == -1) {
+            System.out.println("Resume с № " + uuid + " отсутсвует в хранилище");
+            return null;
         }
-        return resume;
+        return storage[indexResumeFind];
     }
 
     public void delete(String uuid) {
-        Resume resume = findResume(uuid);
-        if (resume instanceof Resume) {
-            int index = Arrays.asList(storage).indexOf(resume);
-            storage[index] = storage[size - 1];
+        int indexResumeFind = findResume(uuid);
+        if (indexResumeFind != -1) {
+            storage[indexResumeFind] = storage[size - 1];
             storage[size - 1] = null;
             size--;
         } else {
-            System.out.println("Resume отсутсвует в хранилище");
+            System.out.println("Resume с № " + uuid + " отсутсвует в хранилище");
         }
     }
 
@@ -67,12 +70,12 @@ public class ArrayStorage {
         return size;
     }
 
-    private Resume findResume(String uuid) {
+    private int findResume(String uuid) {
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
-                return storage[i];
+                return i;
             }
         }
-        return null;
+        return -1;
     }
 }

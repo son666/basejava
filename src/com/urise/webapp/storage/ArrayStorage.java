@@ -7,9 +7,7 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private Resume[] storage = new Resume[10_000];
-    private int size;
+public class ArrayStorage extends AbstractArrayStorage {
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -17,7 +15,7 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        int index = findResume(resume.getUuid());
+        int index = getIndex(resume.getUuid());
         if (index != -1) {
             storage[index] = resume;
         } else {
@@ -26,8 +24,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        int index = findResume(resume.getUuid());
-        if (index != -1) {
+        if (getIndex(resume.getUuid()) != -1) {
             System.out.println("Resume c № " + resume.getUuid() + " уже присутствует в хранилище");
         } else if (size != storage.length) {
             storage[size] = resume;
@@ -38,7 +35,7 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        int index = findResume(uuid);
+        int index = getIndex(uuid);
         if (index == -1) {
             System.out.println("Resume с № " + uuid + " отсутсвует в хранилище");
             return null;
@@ -47,7 +44,7 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
-        int index = findResume(uuid);
+        int index = getIndex(uuid);
         if (index != -1) {
             storage[index] = storage[size - 1];
             storage[size - 1] = null;
@@ -61,14 +58,11 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+        return Arrays.copyOfRange(storage, 0, size);
     }
 
-    public int size() {
-        return size;
-    }
 
-    private int findResume(String uuid) {
+    protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
                 return i;

@@ -26,14 +26,13 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        int index = findResume(resume.getUuid());
-        if (index != -1) {
+        if (findResume(resume.getUuid()) != -1) {
             System.out.println("Resume c № " + resume.getUuid() + " уже присутствует в хранилище");
-        } else if (size != storage.length) {
+        } else if (size == storage.length) {
+            System.out.println("В хранилище нет места!");
+        } else {
             storage[size] = resume;
             size++;
-        } else {
-            System.out.println("В хранилище нет места!");
         }
     }
 
@@ -48,12 +47,12 @@ public class ArrayStorage {
 
     public void delete(String uuid) {
         int index = findResume(uuid);
-        if (index != -1) {
+        if (index == -1) {
+            System.out.println("Resume с № " + uuid + " отсутсвует в хранилище");
+        } else {
             storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
-        } else {
-            System.out.println("Resume с № " + uuid + " отсутсвует в хранилище");
         }
     }
 

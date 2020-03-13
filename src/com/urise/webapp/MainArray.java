@@ -6,6 +6,7 @@ import com.urise.webapp.storage.ArrayStorage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 /**
  * Interactive test for com.urise.webapp.storage.ArrayStorage implementation

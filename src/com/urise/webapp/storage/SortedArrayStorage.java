@@ -7,28 +7,18 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public void update(Resume resume) {
-
-    }
-
-    @Override
     public void save(Resume resume) {
-
-    }
-
-    @Override
-    public void delete(String uuid) {
-
-    }
-
-    @Override
-    public Resume[] getAll() {
-        return new Resume[0];
+        int index = getIndex(resume.getUuid());
+        if (index >= 0) {
+            System.out.println("Resume c № " + resume.getUuid() + " уже присутствует в хранилище");
+        } else if (size == storage.length) {
+            System.out.println("В хранилище нет места!");
+        } else {
+            index = -index - 1;
+            System.arraycopy(storage, index, storage, index + 1, storage.length - 1 - index);
+            storage[index] = resume;
+            size++;
+        }
     }
 
     @Override

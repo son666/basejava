@@ -8,7 +8,7 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public abstract class AbstractArrayStorage implements Storage {
-    private static final int STORAGE_LIMIT = 100_00;
+    private static final int STORAGE_LIMIT = 10_000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size;
 
@@ -33,21 +33,6 @@ public abstract class AbstractArrayStorage implements Storage {
             return null;
         }
         return storage[index];
-    }
-
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            System.out.println("Resume с № " + uuid + " отсутсвует в хранилище");
-        } else {
-            storage[index] = null;
-            for (int i = index + 1; i < size; i++) {
-                Resume tmp = storage[i];
-                storage[i] = storage[i - 1];
-                storage[i - 1] = tmp;
-            }
-            size--;
-        }
     }
 
     public Resume[] getAll() {

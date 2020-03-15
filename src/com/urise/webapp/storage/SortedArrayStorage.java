@@ -15,9 +15,20 @@ public class SortedArrayStorage extends AbstractArrayStorage {
             System.out.println("В хранилище нет места!");
         } else {
             index = -index - 1;
-            System.arraycopy(storage, index, storage, index + 1, storage.length - 1 - index);
+            System.arraycopy(storage, index, storage, index + 1, size - index);
             storage[index] = resume;
             size++;
+        }
+    }
+
+    public void delete(String uuid) {
+        int index = getIndex(uuid);
+        if (index < 0) {
+            System.out.println("Resume с № " + uuid + " отсутсвует в хранилище");
+        } else {
+            System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
+            storage[size - 1] = null;
+            size--;
         }
     }
 

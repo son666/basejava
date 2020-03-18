@@ -14,6 +14,7 @@ import java.util.UUID;
 
 public abstract class AbstractArrayStorageTest {
     private Storage storage;
+    private String uuid = UUID.randomUUID().toString();
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -50,13 +51,13 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        Resume resume = new Resume(UUID.randomUUID().toString());
+        Resume resume = new Resume(uuid);
         storage.update(resume);
     }
 
     @Test
     public void save() {
-        storage.save(new Resume(UUID.randomUUID().toString()));
+        storage.save(new Resume(uuid));
         Assert.assertEquals(4, storage.size());
     }
 
@@ -68,11 +69,8 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = StorageException.class)
     public void saveStorageException() throws Exception {
         storage.clear();
-        Field field = storage.getClass().getSuperclass().getDeclaredFields()[0];
-        field.setAccessible(true);
-        int storageLenght = Integer.parseInt(field.get(storage).toString());
-        field.setAccessible(false);
-        for (int i = 0; i < storageLenght; i++) {
+        //TODO доделать
+        for (int i = 0; i < 10000; i++) {
             try {
                 storage.save(new Resume());
             } catch (StorageException e) {
@@ -85,7 +83,7 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void get() {
         Resume resume = storage.get(UUID_1);
-        Assert.assertEquals(UUID_1, resume.getUuid());
+        Assert.assertEquals(storage.get(UUID_1), resume);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -101,13 +99,15 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void deleteNotExist() {
-        storage.delete(UUID.randomUUID().toString());
+        storage.delete(uuid);
     }
 
     @Test
     public void getAll() {
         Resume[] resumes = storage.getAll();
-        Assert.assertEquals(storage.size(), resumes.length);
+        for (int i = 0; i < storage.size(); i++) {
+            Assert.assertEquals(storage.get(resumes[i].toString()), resumes[i]);
+        }
     }
 
 }

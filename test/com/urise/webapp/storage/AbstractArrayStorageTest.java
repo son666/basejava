@@ -8,7 +8,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Field;
 import java.util.UUID;
 
 
@@ -67,10 +66,9 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test(expected = StorageException.class)
-    public void saveStorageException() throws Exception {
+    public void saveStorageException() {
         storage.clear();
-        //TODO доделать
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
             try {
                 storage.save(new Resume());
             } catch (StorageException e) {

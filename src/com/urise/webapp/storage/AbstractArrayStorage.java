@@ -25,10 +25,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void saveElement (Resume resume) {
+    protected void saveElement(Resume resume) {
         if (size == storage.length) {
             throw new StorageException("В хранилище нет места!", resume.getUuid());
-        }else {
+        } else {
             insertElement(resume);
             size++;
         }

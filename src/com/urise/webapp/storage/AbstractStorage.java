@@ -8,46 +8,44 @@ public abstract class AbstractStorage implements Storage {
 
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(resume.getUuid());
-        } else {
-            updateElement(index, resume);
-        }
+        checkIndexNotExist(index, resume.getUuid());
+        updateElement(index, resume);
     }
 
     public void save(Resume resume) {
         int index = getIndex(resume.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(resume.getUuid());
-        } else {
-            saveElement(resume);
-        }
+        checkIndexExist(index, resume.getUuid());
+        saveElement(resume, index);
     }
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            return getElement(index);
-        }
+        checkIndexNotExist(index, uuid);
+        return getElement(index);
     }
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            deleteElement(index);
-        }
+        checkIndexNotExist(index, uuid);
+        deleteElement(index);
     }
 
+    private void checkIndexNotExist(int index, String uuid) {
+        if (index < 0) {
+            throw new NotExistStorageException(uuid);
+        }
+    }
+    private void checkIndexExist(int index, String uuid) {
+        if (index >= 0) {
+            throw new ExistStorageException(uuid);
+        }
+    }
 
     protected abstract int getIndex(String uuid);
 
     protected abstract void updateElement(int index, Resume resume);
 
-    protected abstract void saveElement(Resume resume);
+    protected abstract void saveElement(Resume resume, int index);
 
     protected abstract Resume getElement(int index);
 

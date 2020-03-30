@@ -7,48 +7,49 @@ import com.urise.webapp.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     public void update(Resume resume) {
-        int index = getIndexNotExist(resume.getUuid());;
+        Object index = getIndexNotExist(resume.getUuid());
         updateElement(index, resume);
     }
 
     public void save(Resume resume) {
-        int index = getIndexExist(resume.getUuid());
+        Object index = getIndexExist(resume.getUuid());
         saveElement(resume, index);
     }
 
     public Resume get(String uuid) {
-        int index = getIndexNotExist(uuid);
+        Object index = getIndexNotExist(uuid);
         return getElement(index);
     }
 
     public void delete(String uuid) {
-        int index = getIndexNotExist(uuid);
+        Object index = getIndexNotExist(uuid);
         deleteElement(index);
     }
 
-    private int getIndexNotExist(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
+    protected Object getIndexNotExist(String uuid) {
+        Object index = getIndex(uuid);
+        if ((Integer) index < 0) {
             throw new NotExistStorageException(uuid);
         }
         return index;
     }
-    private int getIndexExist(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
+
+    protected Object getIndexExist(String uuid) {
+        Object index = getIndex(uuid);
+        if ((Integer) index >= 0) {
             throw new ExistStorageException(uuid);
         }
         return index;
     }
 
-    protected abstract int getIndex(String uuid);
+    protected abstract Object getIndex(String uuid);
 
-    protected abstract void updateElement(int index, Resume resume);
+    protected abstract void updateElement(Object index, Resume resume);
 
-    protected abstract void saveElement(Resume resume, int index);
+    protected abstract void saveElement(Resume resume, Object index);
 
-    protected abstract Resume getElement(int index);
+    protected abstract Resume getElement(Object index);
 
-    protected abstract void deleteElement(int index);
+    protected abstract void deleteElement(Object index);
 
 }

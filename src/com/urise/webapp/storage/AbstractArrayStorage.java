@@ -1,5 +1,7 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
@@ -57,6 +59,20 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected abstract void insertElement(Resume resume, int index);
 
     protected abstract void deleteResume(int index);
+
+    @Override
+    protected void checkKeyNotExist(Object key, String uuid) {
+        if ((Integer) key >= 0) {
+            throw new ExistStorageException(uuid);
+        }
+    }
+
+    @Override
+    protected void checkKeyExist(Object key, String uuid) {
+        if ((Integer) key < 0) {
+            throw new NotExistStorageException(uuid);
+        }
+    }
 
 
 }

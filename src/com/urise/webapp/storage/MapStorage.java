@@ -12,7 +12,7 @@ public class MapStorage extends AbstractStorage {
     private Map<String, Resume> mapResume = new HashMap<>();
 
     @Override
-    protected String getIndex(String uuid) {
+    protected String getKey(String uuid) {
         if (!mapResume.containsKey(uuid)) {
             return null;
         }
@@ -20,24 +20,24 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateElement(Object index, Resume resume) {
+    protected void updateElement(Object key, Resume resume) {
         mapResume.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected void saveElement(Resume resume, Object index) {
+    protected void saveElement(Resume resume, Object key) {
         mapResume.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected Resume getElement(Object index) {
-        String uuid = (String) index;
+    protected Resume getElement(Object key) {
+        String uuid = (String) key;
         return mapResume.get(uuid);
     }
 
     @Override
-    protected void deleteElement(Object index) {
-        String uuid = (String) index;
+    protected void deleteElement(Object key) {
+        String uuid = (String) key;
         mapResume.remove(uuid);
     }
 
@@ -59,20 +59,17 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected String getIndexNotExist(String uuid) {
-        String index = getIndex(uuid);
-        if (index == null) {
-            throw new NotExistStorageException(uuid);
+    protected void checkKeyNotExist(Object key, String uuid) {
+        if (key != null) {
+            throw new ExistStorageException(uuid);
         }
-        return index;
     }
 
     @Override
-    protected String getIndexExist(String uuid) {
-        String index = getIndex(uuid);
-        if (index != null) {
-            throw new ExistStorageException(uuid);
+    protected void checkKeyExist(Object key, String uuid) {
+        if (key == null) {
+            throw new NotExistStorageException(uuid);
         }
-        return index;
     }
+
 }

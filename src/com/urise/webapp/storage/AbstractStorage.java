@@ -1,48 +1,46 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
     public void update(Resume resume) {
-        Object index = getIndexNotExist(resume.getUuid());
-        updateElement(index, resume);
+        Object key = searchKeyExist(resume.getUuid());
+        updateElement(key, resume);
     }
 
     public void save(Resume resume) {
-        Object index = getIndexExist(resume.getUuid());
-        saveElement(resume, index);
+        Object key = searchKeyNotExist(resume.getUuid());
+        saveElement(resume, key);
     }
 
     public Resume get(String uuid) {
-        Object index = getIndexNotExist(uuid);
-        return getElement(index);
+        Object key = searchKeyExist(uuid);
+        return getElement(key);
     }
 
     public void delete(String uuid) {
-        Object index = getIndexNotExist(uuid);
-        deleteElement(index);
+        Object key = searchKeyExist(uuid);
+        deleteElement(key);
     }
 
-    protected Object getIndexNotExist(String uuid) {
-        Object index = getIndex(uuid);
-        if ((Integer) index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        return index;
+    protected Object searchKeyNotExist(String uuid) {
+        Object key = getKey(uuid);
+        checkKeyNotExist(key, uuid);
+        return key;
     }
 
-    protected Object getIndexExist(String uuid) {
-        Object index = getIndex(uuid);
-        if ((Integer) index >= 0) {
-            throw new ExistStorageException(uuid);
-        }
-        return index;
+    protected Object searchKeyExist(String uuid) {
+        Object key = getKey(uuid);
+        checkKeyExist(key, uuid);
+        return key;
     }
 
-    protected abstract Object getIndex(String uuid);
+    protected abstract Object getKey(String uuid);
+
+    protected abstract void checkKeyNotExist(Object key, String uuid);
+
+    protected abstract void checkKeyExist(Object key, String uuid);
 
     protected abstract void updateElement(Object index, Resume resume);
 

@@ -56,15 +56,15 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void checkKeyNotExist(Object key, String uuid) {
-        if ((Integer) key >= 0) {
+    protected void checkKeyNotExist(Object searchKey, String uuid) {
+        if ((Integer) searchKey >= 0) {
             throw new ExistStorageException(uuid);
         }
     }
 
     @Override
-    protected void checkKeyExist(Object key, String uuid) {
-        if ((Integer) key < 0) {
+    protected void checkKeyExist(Object searchKey, String uuid) {
+        if ((Integer) searchKey < 0) {
             throw new NotExistStorageException(uuid);
         }
     }

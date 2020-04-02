@@ -1,7 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
@@ -56,16 +54,12 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void checkKeyNotExist(Object searchKey, String uuid) {
-        if ((Integer) searchKey >= 0) {
-            throw new ExistStorageException(uuid);
-        }
+    protected boolean isKeyNotExist(Object searchKey, String uuid) {
+        return (Integer) searchKey >= 0;
     }
 
     @Override
-    protected void checkKeyExist(Object searchKey, String uuid) {
-        if ((Integer) searchKey < 0) {
-            throw new NotExistStorageException(uuid);
-        }
+    protected boolean isKeyExist(Object searchKey, String uuid) {
+        return (Integer) searchKey < 0;
     }
 }

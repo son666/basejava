@@ -1,7 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -59,17 +57,13 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected void checkKeyNotExist(Object key, String uuid) {
-        if (key != null) {
-            throw new ExistStorageException(uuid);
-        }
+    protected boolean isKeyNotExist(Object key, String uuid) {
+        return key != null;
     }
 
     @Override
-    protected void checkKeyExist(Object key, String uuid) {
-        if (key == null) {
-            throw new NotExistStorageException(uuid);
-        }
+    protected boolean isKeyExist(Object key, String uuid) {
+        return key == null;
     }
 
 }

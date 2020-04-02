@@ -1,5 +1,7 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
@@ -26,21 +28,25 @@ public abstract class AbstractStorage implements Storage {
 
     protected Object searchKeyNotExist(String uuid) {
         Object searchKey = getKey(uuid);
-        checkKeyNotExist(searchKey, uuid);
+        if (isKeyNotExist(searchKey, uuid)) {
+            throw new ExistStorageException(uuid);
+        }
         return searchKey;
     }
 
     protected Object searchKeyExist(String uuid) {
         Object searchKey = getKey(uuid);
-        checkKeyExist(searchKey, uuid);
+        if (isKeyExist(searchKey, uuid)) {
+            throw new NotExistStorageException(uuid);
+        }
         return searchKey;
     }
 
     protected abstract Object getKey(String uuid);
 
-    protected abstract void checkKeyNotExist(Object searchKey, String uuid);
+    protected abstract boolean isKeyNotExist(Object searchKey, String uuid);
 
-    protected abstract void checkKeyExist(Object searchKey, String uuid);
+    protected abstract boolean isKeyExist(Object searchKey, String uuid);
 
     protected abstract void updateElement(Object index, Resume resume);
 

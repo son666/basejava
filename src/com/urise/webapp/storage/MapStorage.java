@@ -10,7 +10,7 @@ public class MapStorage extends AbstractStorage {
     private Map<String, Resume> mapResume = new HashMap<>();
 
     @Override
-    protected String getKey(String uuid) {
+    protected String getSearchKey(String uuid) {
         if (!mapResume.containsKey(uuid)) {
             return null;
         }
@@ -57,13 +57,9 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isKeyNotExist(Object key, String uuid) {
-        return key != null;
+    protected boolean isExist(Object searchKey) {
+        return searchKey != null;
     }
 
-    @Override
-    protected boolean isKeyExist(Object key, String uuid) {
-        return key == null;
-    }
 
 }

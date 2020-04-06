@@ -13,6 +13,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size;
 
+    protected abstract void insertElement(Resume resume, int index);
+
+    protected abstract void deleteResume(int index);
+
+    protected abstract Integer getSearchKey(String uuid);
+
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
@@ -46,6 +52,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size--;
     }
 
+    @Override
+    protected boolean isExist(Object index) {
+        return (Integer) index >= 0;
+    }
+
     public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
@@ -53,20 +64,5 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public int size() {
         return size;
     }
-
-    protected abstract void insertElement(Resume resume, int index);
-
-    protected abstract void deleteResume(int index);
-
-    @Override
-    protected boolean isKeyNotExist(Object searchKey, String uuid) {
-        return (Integer) searchKey >= 0;
-    }
-
-    @Override
-    protected boolean isKeyExist(Object searchKey, String uuid) {
-        return (Integer) searchKey < 0;
-    }
-
 
 }

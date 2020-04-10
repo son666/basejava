@@ -3,7 +3,6 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {
@@ -40,15 +39,15 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
+    public List<Resume> getCopyAllElement() {
+        return listResume;
+    }
+
+    @Override
     public void clear() {
         listResume.clear();
     }
 
-    @Override
-    public List<Resume> getAllSorted() {
-        Collections.sort(listResume, Resume::compareTo);
-        return listResume;
-    }
 
     @Override
     public int size() {

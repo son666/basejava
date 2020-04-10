@@ -9,9 +9,6 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     protected Resume getSearchKey(String uuid) {
-        if (!mapResume.containsKey(uuid)) {
-            return null;
-        }
         return mapResume.get(uuid);
     }
 
@@ -36,16 +33,15 @@ public class MapResumeStorage extends AbstractStorage {
     }
 
     @Override
+    public List<Resume> getCopyAllElement() {
+        return new ArrayList<>(mapResume.values());
+    }
+
+    @Override
     public void clear() {
         mapResume.clear();
     }
 
-    @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> listResume = new ArrayList<>(mapResume.values());
-        Collections.sort(listResume, Resume::compareTo);
-        return listResume;
-    }
 
     @Override
     public int size() {

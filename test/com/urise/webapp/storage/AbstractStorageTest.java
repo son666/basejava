@@ -6,6 +6,7 @@ import com.urise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
@@ -14,12 +15,12 @@ public abstract class AbstractStorageTest {
     protected Storage storage;
     private String uuid = UUID.randomUUID().toString();
 
-    private static final String UUID_1 = "uuid1";
-    private static final Resume RESUME1 = new Resume(UUID_1);
-    private static final String UUID_2 = "uuid2";
-    private static final Resume RESUME2 = new Resume(UUID_2);
-    private static final String UUID_3 = "uuid3";
-    private static final Resume RESUME3 = new Resume(UUID_3);
+    private static final String FULL_NAME_1 = "Иванов Иван";
+    private static final Resume RESUME1 = new Resume(FULL_NAME_1);
+    private static final String FULL_NAME_2 = "Сидоров Петр";
+    private static final Resume RESUME2 = new Resume(FULL_NAME_2);
+    private static final String FULL_NAME_3 = "Федин Илья";
+    private static final Resume RESUME3 = new Resume(FULL_NAME_3);
 
 
     public AbstractStorageTest(Storage storage) {
@@ -47,7 +48,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume resume = storage.get(UUID_2);
+        Resume resume = storage.get(RESUME2.getUuid());
         storage.update(resume);
     }
 
@@ -73,7 +74,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() {
-        Resume resume = storage.get(UUID_1);
+        Resume resume = storage.get(RESUME1.getUuid());
         assertGet(resume);
     }
 
@@ -95,12 +96,12 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() {
-        Resume[] resumes = storage.getAll();
-        assertEquals(3, resumes.length);
-        assertEquals(RESUME1, resumes[0]);
-        assertEquals(RESUME2, resumes[1]);
-        assertEquals(RESUME3, resumes[2]);
+    public void getAllSorted() {
+        List<Resume> listResume = storage.getAllSorted();
+        assertEquals(3, listResume.size());
+        assertEquals(RESUME1, listResume.get(0));
+        assertEquals(RESUME2, listResume.get(1));
+        assertEquals(RESUME3, listResume.get(2));
     }
 
     private void assertGet(Resume resume) {

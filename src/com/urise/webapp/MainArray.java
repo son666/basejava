@@ -12,9 +12,9 @@ public class MainArray {
     private static final Storage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {
-        Resume r1 = new Resume();
-        Resume r2 = new Resume();
-        Resume r3 = new Resume();
+        Resume r1 = new Resume("Иванов Иван");
+        Resume r2 = new Resume("Сидоров Петр");
+        Resume r3 = new Resume("Федин Илья");
 
         ARRAY_STORAGE.save(r3);
         ARRAY_STORAGE.save(r1);
@@ -40,7 +40,7 @@ public class MainArray {
 
     static void printAll() {
         System.out.println("\nGet All");
-        for (Resume r : ARRAY_STORAGE.getAll()) {
+        for (Resume r : ARRAY_STORAGE.getAllSorted()) {
             System.out.println(r);
         }
     }

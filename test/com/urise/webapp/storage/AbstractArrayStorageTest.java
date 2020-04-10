@@ -12,16 +12,16 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
     }
 
     @Test(expected = StorageException.class)
-    public void saveStorageException() {
+    public void saveOverflow() {
         storage.clear();
         for (int i = 0; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
             try {
-                storage.save(new Resume());
+                storage.save(new Resume("fullName" + i));
             } catch (StorageException e) {
                 Assert.fail("Возникала ошибка в процессе заполнения хранилища: " + e.getMessage());
             }
         }
-        storage.save(new Resume()); //Переполняем массив
+        storage.save(new Resume("fullName" + AbstractArrayStorage.STORAGE_LIMIT + 1)); //Переполняем массив
     }
 
 }

@@ -4,44 +4,79 @@ import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.ArrayStorage;
 import com.urise.webapp.storage.Storage;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+
 
 /**
  * Test for your com.urise.webapp.storage.ArrayStorage implementation
  */
 public class MainArray {
-    private static final Storage ARRAY_STORAGE = new ArrayStorage();
+    private final static Storage ARRAY_STORAGE = new ArrayStorage();
 
-    public static void main(String[] args) {
-        Resume r1 = new Resume("Иванов Иван");
-        Resume r2 = new Resume("Сидоров Петр");
-        Resume r3 = new Resume("Федин Илья");
-
-        ARRAY_STORAGE.save(r3);
-        ARRAY_STORAGE.save(r1);
-        ARRAY_STORAGE.save(r2);
-
-        System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
-        System.out.println("Size: " + ARRAY_STORAGE.size());
-//        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
-
-        System.out.print("\nВыполение update резюме r1");
-
-        ARRAY_STORAGE.update(r1);
-        printAll();
-
-        printAll();
-        ARRAY_STORAGE.delete(r2.getUuid());
-        printAll();
-        ARRAY_STORAGE.clear();
-        printAll();
-
-        System.out.println("Size: " + ARRAY_STORAGE.size());
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        Resume r;
+        while (true) {
+            System.out.print("Введите одну из команд - (list | save fullName | delete uuid | get uuid | update uuid fullName | clear | exit): ");
+            String[] params = reader.readLine().trim().toLowerCase().split(" ");
+            if (params.length < 1 || params.length > 3) {
+                System.out.println("Неверная команда.");
+                continue;
+            }
+            String param = null;
+            if (params.length > 1) {
+                param = params[1].intern();
+            }
+            switch (params[0]) {
+                case "list":
+                    printAll();
+                    break;
+                case "size":
+                    System.out.println(ARRAY_STORAGE.size());
+                    break;
+                case "save":
+                    r = new Resume(param);
+                    ARRAY_STORAGE.save(r);
+                    printAll();
+                    break;
+                case "update":
+                    r = new Resume(param, params[2]);
+                    ARRAY_STORAGE.update(r);
+                    printAll();
+                    break;
+                case "delete":
+                    ARRAY_STORAGE.delete(param);
+                    printAll();
+                    break;
+                case "get":
+                    System.out.println(ARRAY_STORAGE.get(param));
+                    break;
+                case "clear":
+                    ARRAY_STORAGE.clear();
+                    printAll();
+                    break;
+                case "exit":
+                    return;
+                default:
+                    System.out.println("Неверная команда.");
+                    break;
+            }
+        }
     }
 
     static void printAll() {
-        System.out.println("\nGet All");
-        for (Resume r : ARRAY_STORAGE.getAllSorted()) {
-            System.out.println(r);
+        List<Resume> all = ARRAY_STORAGE.getAllSorted();
+        System.out.println("----------------------------");
+        if (all.size() == 0) {
+            System.out.println("Empty");
+        } else {
+            for (Resume r : all) {
+                System.out.println(r);
+            }
         }
+        System.out.println("----------------------------");
     }
 }

@@ -6,10 +6,12 @@ import com.urise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractStorageTest {
     protected Storage storage;
@@ -48,8 +50,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume resume = storage.get(RESUME2.getUuid());
-        storage.update(resume);
+        Resume newResume = new Resume(RESUME1.getUuid(), "New Name");
+        storage.update(newResume);
+        assertTrue(newResume == storage.get(RESUME1.getUuid()));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -99,9 +102,7 @@ public abstract class AbstractStorageTest {
     public void getAllSorted() {
         List<Resume> listResume = storage.getAllSorted();
         assertEquals(3, listResume.size());
-        assertEquals(RESUME1, listResume.get(0));
-        assertEquals(RESUME2, listResume.get(1));
-        assertEquals(RESUME3, listResume.get(2));
+        assertEquals(listResume, Arrays.asList(RESUME1, RESUME2, RESUME3));
     }
 
     private void assertGet(Resume resume) {

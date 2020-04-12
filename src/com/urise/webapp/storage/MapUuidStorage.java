@@ -2,39 +2,37 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MapUuidStorage extends AbstractStorage {
     private Map<String, Resume> mapResume = new HashMap<>();
 
     @Override
     protected String getSearchKey(String uuid) {
-        if (!mapResume.containsKey(uuid)) {
-            return null;
-        }
-        return mapResume.get(uuid).getUuid();
+        return uuid;
     }
 
     @Override
-    protected void updateElement(Object key, Resume resume) {
-        mapResume.put(resume.getUuid(), resume);
+    protected void updateElement(Object uuid, Resume resume) {
+        mapResume.put((String) uuid, resume);
     }
 
     @Override
-    protected void saveElement(Resume resume, Object key) {
-        mapResume.put(resume.getUuid(), resume);
+    protected void saveElement(Resume resume, Object uuid) {
+        mapResume.put((String) uuid, resume);
     }
 
     @Override
-    protected Resume getElement(Object key) {
-        String uuid = (String) key;
-        return mapResume.get(uuid);
+    protected Resume getElement(Object uuid) {
+        return mapResume.get((String) uuid);
     }
 
     @Override
-    protected void deleteElement(Object key) {
-        String uuid = (String) key;
-        mapResume.remove(uuid);
+    protected void deleteElement(Object uuid) {
+        mapResume.remove((String) uuid);
     }
 
     @Override
@@ -53,8 +51,8 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
-        return searchKey != null;
+    protected boolean isExist(Object uuid) {
+        return mapResume.containsKey((String) uuid);
     }
 
 

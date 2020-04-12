@@ -40,7 +40,7 @@ public abstract class AbstractStorage implements Storage {
 
     public List<Resume> getAllSorted() {
         List<Resume> listResume = getCopyAllElement();
-        Collections.sort(listResume, Resume::compareTo);
+        Collections.sort(listResume);
         return listResume;
     }
 

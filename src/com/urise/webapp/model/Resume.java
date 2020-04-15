@@ -1,16 +1,16 @@
 package com.urise.webapp.model;
 
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Initial resume class
  */
 public class Resume implements Comparable<Resume> {
 
-    // Unique identifier
     private final String uuid;
     private final String fullName;
+    private Map<SectionContact, String> contact = new EnumMap<>(SectionContact.class);
+    private Map<SectionType, Section> section = new EnumMap<>(SectionType.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -30,6 +30,23 @@ public class Resume implements Comparable<Resume> {
     public String getFullName() {
         return fullName;
     }
+
+    public void addContact(SectionContact typeContact, String value) {
+        contact.put(typeContact, value);
+    }
+
+    public void addSection(SectionType typeSection, Section objectSection) {
+        section.put(typeSection, objectSection);
+    }
+
+    public String getContact(SectionContact typeContact) {
+        return contact.get(typeContact);
+    }
+
+    public Section getSection(SectionType typeSection) {
+        return section.get(typeSection);
+    }
+
 
     @Override
     public boolean equals(Object o) {

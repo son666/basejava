@@ -2,19 +2,18 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.YearMonth;
 import java.util.Arrays;
+import java.util.List;
 
 public class ResumeTestData {
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yyyy");
 
-    public static void main(String[] args) throws ParseException {
-        Resume resume = new Resume("TestName");
+    public static void main(String[] args) {
+        Resume resume = new Resume("Григорий Кислин");
         resume.addContact(SectionContact.PHONE, "+7(111)222-33-44");
         resume.addContact(SectionContact.MAIL, "test@mail.ru");
-        resume.addContact(SectionContact.SKYPE, "skype");
+        resume.addContact(SectionContact.SKYPE, "Skype");
+        resume.addContact(SectionContact.MEDIA, "Профиль LinkedIn");
 
         resume.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
         resume.addSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
@@ -43,7 +42,41 @@ public class ResumeTestData {
                 new Position("Alcatel", YearMonth.of(1997, 9), YearMonth.of(1998, 3), "6 месяцев обучения цифровым телефонным сетям (Москва)", "")
         )));
 
-        System.out.println(resume);
+        //Output resume Test
+        System.out.println("Reg Number: " + resume.getUuid());
+        System.out.println(resume.getFullName());
+        for (SectionContact typeContact : SectionContact.values()) {
+            System.out.print(typeContact.getTitle() + " ");
+            System.out.println(resume.getContact(typeContact));
+        }
+        for (SectionType typeSection : SectionType.values()) {
+            System.out.println();
+            System.out.println(typeSection.getTitle());
+            Section section = resume.getSection(typeSection);
+            if (section instanceof TextSection) {
+                System.out.println(section.getContent());
+            } else if (section instanceof ListSection) {
+                printListSection((ListSection) section);
+            } else if (section instanceof OrganizationSection) {
+                printOrganizationSection((OrganizationSection) section);
+            }
+        }
+    }
 
+    private static void printListSection(ListSection section) {
+        List<String> listSection = section.getContent();
+        for (String listString : listSection) {
+            System.out.println(" * " + listString);
+        }
+    }
+
+    private static void printOrganizationSection(OrganizationSection section) {
+        List<Position> listSection = section.getContent();
+        for (Position position : listSection) {
+            System.out.println(position.getNamePosition());
+            System.out.println(position.getStartDate() + " - " + position.getEndDate());
+            System.out.println(position.getPosition());
+            System.out.println(position.getActivity());
+        }
     }
 }

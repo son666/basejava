@@ -9,8 +9,8 @@ public class Resume implements Comparable<Resume> {
 
     private final String uuid;
     private final String fullName;
-    private Map<SectionContact, String> contact = new EnumMap<>(SectionContact.class);
-    private Map<SectionType, Section> section = new EnumMap<>(SectionType.class);
+    private Map<SectionContact, String> contacts = new EnumMap<>(SectionContact.class);
+    private Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -32,19 +32,19 @@ public class Resume implements Comparable<Resume> {
     }
 
     public void addContact(SectionContact typeContact, String value) {
-        contact.put(typeContact, value);
+        contacts.put(typeContact, value);
     }
 
     public void addSection(SectionType typeSection, Section objectSection) {
-        section.put(typeSection, objectSection);
+        sections.put(typeSection, objectSection);
     }
 
     public String getContact(SectionContact typeContact) {
-        return contact.get(typeContact);
+        return contacts.get(typeContact);
     }
 
     public Section getSection(SectionType typeSection) {
-        return section.get(typeSection);
+        return sections.get(typeSection);
     }
 
 
@@ -54,15 +54,19 @@ public class Resume implements Comparable<Resume> {
         if (o == null || getClass() != o.getClass()) return false;
 
         Resume resume = (Resume) o;
-
-        if (!uuid.equals(resume.getUuid())) return false;
-        return fullName.equals(resume.getFullName());
+        boolean result = ((uuid.equals(resume.getUuid())) &&
+                (fullName.equals(resume.getFullName())) &&
+                (contacts.equals(resume.contacts)) &&
+                (sections.equals(resume.sections)));
+        return result;
     }
 
     @Override
     public int hashCode() {
         int result = uuid.hashCode();
         result = 31 * result + fullName.hashCode();
+        result = 31 * result + contacts.hashCode();
+        result = 31 * result + sections.hashCode();
         return result;
     }
 

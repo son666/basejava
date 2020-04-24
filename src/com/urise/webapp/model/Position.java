@@ -4,26 +4,24 @@ import java.time.YearMonth;
 import java.util.Objects;
 
 public class Position {
-    private String namePosition;
+    private final Link namePosition;
+    private final YearMonth startDate;
+    private final YearMonth endDate;
+    private final String position;
+    private final String activity;
 
-    private YearMonth startDate;
-    private YearMonth endDate;
-    private String position;
-    private String activity;
-
-    public Position(String namePosition, YearMonth startDate, YearMonth endDate, String position, String activity) {
-        Objects.requireNonNull(namePosition, "Name organization must not be null");
+    public Position(String namePosition, String urlPosition, YearMonth startDate, YearMonth endDate, String position, String activity) {
         Objects.requireNonNull(startDate, "Start Date must not be null");
         Objects.requireNonNull(endDate, "End Date must not be null");
         Objects.requireNonNull(position, "Position must not be null");
-        this.namePosition = namePosition;
+        this.namePosition = new Link(namePosition, urlPosition);
         this.startDate = startDate;
         this.endDate = endDate;
         this.position = position;
         this.activity = activity;
     }
 
-    public String getNamePosition() {
+    public Link getNamePosition() {
         return namePosition;
     }
 
@@ -47,12 +45,12 @@ public class Position {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Position that = (Position) o;
-        return Objects.equals(namePosition, that.namePosition) &&
-                Objects.equals(startDate, that.startDate) &&
-                Objects.equals(endDate, that.endDate) &&
-                Objects.equals(position, that.position) &&
-                Objects.equals(activity, that.activity);
+        Position position1 = (Position) o;
+        return namePosition.equals(position1.namePosition) &&
+                startDate.equals(position1.startDate) &&
+                endDate.equals(position1.endDate) &&
+                position.equals(position1.position) &&
+                Objects.equals(activity, position1.activity);
     }
 
     @Override

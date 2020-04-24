@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.urise.webapp.model</OriginalElement>
+  <nodes>
+    <node x="80.55370370370377" y="360.0">com.urise.webapp.model.Resume</node>
+    <node x="145.0" y="147.0">com.urise.webapp.model.SectionContact</node>
+    <node x="748.1833333333334" y="0.0">com.urise.webapp.model.Link</node>
+    <node x="395.0" y="191.0">com.urise.webapp.model.Section</node>
+    <node x="678.5537037037038" y="393.0">com.urise.webapp.model.OrganizationSection</node>
+    <node x="533.5537037037037" y="393.0">com.urise.webapp.model.TextSection</node>
+    <node x="0.0" y="125.0">com.urise.webapp.model.SectionType</node>
+    <node x="725.6833333333334" y="147.0">com.urise.webapp.model.Position</node>
+    <node x="355.5537037037037" y="393.0">com.urise.webapp.model.ListSection</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.urise.webapp.model.Resume" target="com.urise.webapp.model.SectionType">
+      <point x="-106.25" y="-59.5" />
+      <point x="101.80370370370377" y="340.0" />
+      <point x="31.25" y="340.0" />
+      <point x="-31.25" y="92.5" />
+    </edge>
+    <edge source="com.urise.webapp.model.OrganizationSection" target="com.urise.webapp.model.Position">
+      <point x="0.0" y="-26.5" />
+      <point x="769.0537037037038" y="340.0" />
+      <point x="765.1833333333334" y="340.0" />
+      <point x="-39.5" y="70.5" />
+    </edge>
+    <edge source="com.urise.webapp.model.Position" target="com.urise.webapp.model.Link">
+      <point x="0.0" y="-70.5" />
+      <point x="0.0" y="37.5" />
+    </edge>
+    <edge source="com.urise.webapp.model.Resume" target="com.urise.webapp.model.Section">
+      <point x="106.25" y="-59.5" />
+      <point x="314.3037037037038" y="340.0" />
+      <point x="424.7" y="340.0" />
+      <point x="-19.80000000000001" y="26.5" />
+    </edge>
+    <edge source="com.urise.webapp.model.ListSection" target="com.urise.webapp.model.Section">
+      <point x="0.0" y="-26.5" />
+      <point x="434.5537037037037" y="340.0" />
+      <point x="444.5" y="340.0" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="com.urise.webapp.model.Resume" target="com.urise.webapp.model.SectionContact">
+      <point x="21.25" y="-59.5" />
+      <point x="229.30370370370377" y="340.0" />
+      <point x="254.5" y="340.0" />
+      <point x="36.5" y="70.5" />
+    </edge>
+    <edge source="com.urise.webapp.model.OrganizationSection" target="com.urise.webapp.model.Section">
+      <point x="-60.33333333333337" y="-26.5" />
+      <point x="708.7203703703703" y="330.0" />
+      <point x="484.09999999999997" y="330.0" />
+      <point x="39.599999999999966" y="26.5" />
+    </edge>
+    <edge source="com.urise.webapp.model.TextSection" target="com.urise.webapp.model.Section">
+      <point x="0.0" y="-26.5" />
+      <point x="596.0537037037037" y="340.0" />
+      <point x="464.29999999999995" y="340.0" />
+      <point x="19.799999999999955" y="26.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.1" x="459.3636363636365" y="241.8181818181818" />
+  <SelectedNodes>
+    <node>com.urise.webapp.model.Section</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

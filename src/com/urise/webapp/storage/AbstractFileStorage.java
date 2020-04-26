@@ -5,6 +5,7 @@ import com.urise.webapp.model.Resume;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,6 +14,8 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     private File directory;
 
     protected abstract void doWrite(Resume resume, File file) throws IOException;
+
+    protected abstract Resume doRead(File file) throws IOException;
 
     protected AbstractFileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
@@ -32,7 +35,15 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected List<Resume> getCopyAllElement() {
-        return null;
+        File[] listFile = directory.listFiles();
+        if (listFile == null) {
+            throw new StorageException("The directory does not contain files", null);
+        }
+        List<Resume> listResume = new ArrayList<>();
+        for (File file : listFile) {
+            listResume.add(getElement(file));
+        }
+        return listResume;
     }
 
     @Override
@@ -42,7 +53,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void updateElement(File file, Resume resume) {
-
+        try {
+            doWrite(resume, file);
+        } catch (IOException e) {
+            throw new StorageException("Write in file error", resume.getUuid(), e);
+        }
     }
 
     @Override
@@ -57,21 +72,37 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected Resume getElement(File file) {
-        return null;
+        try {
+            return doRead(file);
+        } catch (IOException e) {
+            throw new StorageException("File read error", file.getName(), e);
+        }
     }
 
     @Override
     protected void deleteElement(File file) {
-
+        if (!file.delete()) {
+            throw new StorageException("Error delete file", file.getName());
+        }
     }
 
     @Override
     public void clear() {
-
+        File[] listFile = directory.listFiles();
+        if (listFile == null) {
+            throw new StorageException("The directory Does not contain files", null);
+        }
+        for (File file : listFile) {
+            deleteElement(file);
+        }
     }
 
     @Override
     public int size() {
-        return 0;
+        String[] listFile = directory.list();
+        if (listFile == null) {
+            throw new StorageException("The directory Does not contain files", null);
+        }
+        return listFile.length;
     }
 }

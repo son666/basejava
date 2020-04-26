@@ -8,15 +8,25 @@ import java.util.List;
 
 public class ResumeTestData {
 
-    public static void main(String[] args) {
-        Resume resume = new Resume("Григорий Кислин");
+    private Resume resume;
+
+    public ResumeTestData(Resume resume) {
+        this.resume = resume;
+    }
+
+    public void addSectionContact() {
         resume.addContact(SectionContact.PHONE, "+7(111)222-33-44");
         resume.addContact(SectionContact.MAIL, "test@mail.ru");
         resume.addContact(SectionContact.SKYPE, "Skype");
         resume.addContact(SectionContact.MEDIA, "Профиль LinkedIn");
+    }
 
+    public void addSectionText() {
         resume.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
         resume.addSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
+    }
+
+    public void addSectionList() {
         resume.addSection(SectionType.ACHIEVEMENT, new ListSection(Arrays.asList(
                 "С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.",
                 "Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.",
@@ -30,18 +40,41 @@ public class ResumeTestData {
                 "MySQL, SQLite, MS SQL, HSQLDB",
                 "Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy"
         )));
-        resume.addSection(SectionType.EXPERIENCE, new OrganizationSection(Arrays.asList(
-                new Position("Java Online Projects", "www.url.ru", YearMonth.of(2013, 10), YearMonth.now(), "Автор проекта", "Создание, организация и проведение Java онлайн проектов и стажировок."),
-                new Position("Wrike", "www.url.ru", YearMonth.of(2014, 10), YearMonth.of(2016, 1), "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."),
-                new Position("RIT Center", "www.url.ru", YearMonth.of(2012, 4), YearMonth.of(2014, 10), "Java архитектор", "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python")
-        )));
-        resume.addSection(SectionType.EDUCATION, new OrganizationSection(Arrays.asList(
-                new Position("Coursera", "www.url.ru", YearMonth.of(2013, 3), YearMonth.of(2013, 5), "Functional Programming Principles in Scala\" by Martin Odersky", ""),
-                new Position("Luxoft", "", YearMonth.of(2011, 3), YearMonth.of(2011, 4), "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"", ""),
-                new Position("Siemens AG", "www.url.ru", YearMonth.of(2005, 1), YearMonth.of(2005, 4), "3 месяца обучения мобильным IN сетям (Берлин)\"", ""),
-                new Position("Alcatel", "www.url.ru", YearMonth.of(1997, 9), YearMonth.of(1998, 3), "6 месяцев обучения цифровым телефонным сетям (Москва)", "")
-        )));
+    }
 
+    public void addSectionWorkOrganization() {
+        resume.addSection(SectionType.EXPERIENCE, new OrganizationSection(Arrays.asList(
+                new Organization("Java Online Projects", "www.url.ru",
+                        new Position(YearMonth.of(2013, 10), YearMonth.now(), "Автор проекта", "Создание, организация и проведение Java онлайн проектов и стажировок."),
+                        new Position(YearMonth.of(2014, 12), YearMonth.now(), "Автор проекта", "Создание, организация и проведение Java онлайн проектов и стажировок.")
+                ),
+                new Organization("Wrike", "www.url.ru",
+                        new Position(YearMonth.of(2014, 10), YearMonth.of(2016, 1), "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.")
+                ),
+                new Organization("RIT Center", "www.url.ru",
+                        new Position(YearMonth.of(2012, 4), YearMonth.of(2014, 10), "Java архитектор", "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python")
+                )
+        )));
+    }
+
+    public void addSectionStudyOrganization() {
+        resume.addSection(SectionType.EDUCATION, new OrganizationSection(Arrays.asList(
+                new Organization("Coursera", "www.url.ru",
+                        new Position(YearMonth.of(2013, 3), YearMonth.of(2013, 5), "Functional Programming Principles in Scala\" by Martin Odersky", "")
+                ),
+                new Organization("Luxoft", "",
+                        new Position(YearMonth.of(2011, 3), YearMonth.of(2011, 4), "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"", "")
+                ),
+                new Organization("Siemens AG", "www.url.ru",
+                        new Position(YearMonth.of(2005, 1), YearMonth.of(2005, 4), "3 месяца обучения мобильным IN сетям (Берлин)\"", "")
+                ),
+                new Organization("Alcatel", "www.url.ru",
+                        new Position(YearMonth.of(1997, 9), YearMonth.of(1998, 3), "6 месяцев обучения цифровым телефонным сетям (Москва)", "")
+                )
+        )));
+    }
+
+    public void printResume() {
         //Output resume Test
         System.out.println("Reg Number: " + resume.getUuid());
         System.out.println(resume.getFullName());
@@ -71,12 +104,15 @@ public class ResumeTestData {
     }
 
     private static void printOrganizationSection(OrganizationSection section) {
-        List<Position> listSection = section.getContent();
-        for (Position position : listSection) {
-            System.out.println(position.getNamePosition());
-            System.out.println(position.getStartDate() + " - " + position.getEndDate());
-            System.out.println(position.getPosition());
-            System.out.println(position.getActivity());
+        List<Organization> listSection = section.getContent();
+        for (Organization organization : listSection) {
+            System.out.println(organization.getNameOrganization());
+            for (Position position : organization.getPositions()) {
+                System.out.print(position.getStartDate() + " - " + position.getEndDate() + " ");
+                System.out.println(position.getPosition());
+                System.out.println(position.getActivity());
+            }
+            System.out.println();
         }
     }
 }

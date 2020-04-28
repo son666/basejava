@@ -23,8 +23,8 @@ public abstract class AbstractStorageTest {
 
     static {
         RESUME1 = ResumeTestData.initiallyResume("Григорий Кислин");
-        RESUME2 = new Resume("Сидоров Петр");
-        RESUME3 = new Resume("Федин Илья");
+        RESUME2 = ResumeTestData.initiallyResume("Сидоров Петр");
+        RESUME3 = ResumeTestData.initiallyResume("Федин Илья");
     }
 
 

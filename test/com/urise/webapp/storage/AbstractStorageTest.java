@@ -14,25 +14,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractStorageTest {
+
     protected Storage storage;
     private String uuid = UUID.randomUUID().toString();
-    private static final String FULL_NAME_1 = "Григорий Кислин";
     private static final Resume RESUME1;
-    private static final String FULL_NAME_2 = "Сидоров Петр";
     private static final Resume RESUME2;
-    private static final String FULL_NAME_3 = "Федин Илья";
     private static final Resume RESUME3;
 
     static {
-        RESUME1 = new Resume(FULL_NAME_1);
-        ResumeTestData dataResume = new ResumeTestData(RESUME1);
-        dataResume.addSectionContact();
-        dataResume.addSectionText();
-        dataResume.addSectionList();
-        dataResume.addSectionWorkOrganization();
-        dataResume.addSectionStudyOrganization();
-        RESUME2 = new Resume(FULL_NAME_2);
-        RESUME3 = new Resume(FULL_NAME_3);
+        RESUME1 = ResumeTestData.initiallyResume("Григорий Кислин");
+        RESUME2 = new Resume("Сидоров Петр");
+        RESUME3 = new Resume("Федин Илья");
     }
 
 

@@ -5,28 +5,37 @@ import com.urise.webapp.model.*;
 import java.time.YearMonth;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class ResumeTestData {
 
-    private Resume resume;
+    private static Resume resume;
 
-    public ResumeTestData(Resume resume) {
-        this.resume = resume;
+
+    public static Resume initiallyResume(String fullName) {
+        Objects.requireNonNull(fullName, "Full name person must not be null");
+        resume = new Resume(fullName);
+        addSectionContact();
+        addSectionText();
+        addSectionList();
+        addSectionWorkOrganization();
+        addSectionStudyOrganization();
+        return resume;
     }
 
-    public void addSectionContact() {
+    private static void addSectionContact() {
         resume.addContact(SectionContact.PHONE, "+7(111)222-33-44");
         resume.addContact(SectionContact.MAIL, "test@mail.ru");
         resume.addContact(SectionContact.SKYPE, "Skype");
         resume.addContact(SectionContact.MEDIA, "Профиль LinkedIn");
     }
 
-    public void addSectionText() {
+    private static void addSectionText() {
         resume.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
         resume.addSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
     }
 
-    public void addSectionList() {
+    private static void addSectionList() {
         resume.addSection(SectionType.ACHIEVEMENT, new ListSection(Arrays.asList(
                 "С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.",
                 "Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.",
@@ -42,7 +51,7 @@ public class ResumeTestData {
         )));
     }
 
-    public void addSectionWorkOrganization() {
+    private static void addSectionWorkOrganization() {
         resume.addSection(SectionType.EXPERIENCE, new OrganizationSection(Arrays.asList(
                 new Organization("Java Online Projects", "www.url.ru",
                         new Position(YearMonth.of(2013, 10), YearMonth.now(), "Автор проекта", "Создание, организация и проведение Java онлайн проектов и стажировок."),
@@ -57,7 +66,7 @@ public class ResumeTestData {
         )));
     }
 
-    public void addSectionStudyOrganization() {
+    private static void addSectionStudyOrganization() {
         resume.addSection(SectionType.EDUCATION, new OrganizationSection(Arrays.asList(
                 new Organization("Coursera", "www.url.ru",
                         new Position(YearMonth.of(2013, 3), YearMonth.of(2013, 5), "Functional Programming Principles in Scala\" by Martin Odersky", "")
@@ -74,7 +83,7 @@ public class ResumeTestData {
         )));
     }
 
-    public void printResume() {
+    public static void printResume(Resume resume) {
         //Output resume Test
         System.out.println("Reg Number: " + resume.getUuid());
         System.out.println(resume.getFullName());

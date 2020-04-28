@@ -9,14 +9,15 @@ import java.util.List;
 public class MainFile {
     private static List<String> listNameFile = new ArrayList<>();
 
-    private static void findFiles(File file) throws IOException {
-        if (file.isDirectory()) {
-            File[] listFile = file.listFiles();
-            for (int i = 0; i < listFile.length; i++) {
-                findFiles(listFile[i]);
+    private static void findFiles(File fileFind) throws IOException {
+        if (fileFind.isDirectory()) {
+            File[] listFile = fileFind.listFiles();
+            if (listFile == null) return;
+            for (File file : listFile) {
+                findFiles(file);
             }
         } else {
-            listNameFile.add(file.getCanonicalPath());
+            listNameFile.add(fileFind.getName());
         }
     }
 
@@ -27,6 +28,8 @@ public class MainFile {
             for (String fileName : listNameFile) {
                 System.out.println(fileName);
             }
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
